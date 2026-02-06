@@ -66,7 +66,7 @@ static int ffi_webview_version_patch(void) {
 }
 
 /* ---- Forward declarations for c-define callbacks ---- */
-/* Note: char* (not const char*) to match Gambit c-define char-string type */
+/* Note: char* (not const char*) to match Gambit c-define UTF-8-string type */
 void ffi_call_bind_handler(long callback_id, char *id, char *req);
 void ffi_call_dispatch_handler(long callback_id);
 
@@ -142,7 +142,7 @@ END-C
     "webview_terminate")
 
   ;; Window
-  (define-c-lambda webview_set_title (webview_t* char-string) int
+  (define-c-lambda webview_set_title (webview_t* UTF-8-string) int
     "webview_set_title")
   (define-c-lambda webview_set_size (webview_t* int int int) int
     "webview_set_size")
@@ -152,21 +152,21 @@ END-C
     "webview_get_native_handle")
 
   ;; Content
-  (define-c-lambda webview_navigate (webview_t* char-string) int
+  (define-c-lambda webview_navigate (webview_t* UTF-8-string) int
     "webview_navigate")
-  (define-c-lambda webview_set_html (webview_t* char-string) int
+  (define-c-lambda webview_set_html (webview_t* UTF-8-string) int
     "webview_set_html")
-  (define-c-lambda webview_init (webview_t* char-string) int
+  (define-c-lambda webview_init (webview_t* UTF-8-string) int
     "webview_init")
-  (define-c-lambda webview_eval (webview_t* char-string) int
+  (define-c-lambda webview_eval (webview_t* UTF-8-string) int
     "webview_eval")
 
   ;; Binding (via C wrapper)
-  (define-c-lambda raw_webview_bind (webview_t* char-string long) int
+  (define-c-lambda raw_webview_bind (webview_t* UTF-8-string long) int
     "ffi_webview_bind")
-  (define-c-lambda webview_unbind (webview_t* char-string) int
+  (define-c-lambda webview_unbind (webview_t* UTF-8-string) int
     "webview_unbind")
-  (define-c-lambda webview_return (webview_t* char-string int char-string) int
+  (define-c-lambda webview_return (webview_t* UTF-8-string int UTF-8-string) int
     "webview_return")
 
   ;; Dispatch (via C wrapper)
@@ -197,7 +197,7 @@ END-C
 
   ;; ---- c-define trampolines (Scheme functions callable from C) ----
   (c-define (ffi_call_bind_handler callback-id id req)
-            (long char-string char-string) void
+            (long UTF-8-string UTF-8-string) void
             "ffi_call_bind_handler" ""
     (let ((handler (hash-ref *bind-handlers* callback-id #f)))
       (when handler (handler id req))))

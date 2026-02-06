@@ -20,7 +20,7 @@ clean:
 	rm -f vendor/libwebview.so
 
 demo-todo: build
-	LD_LIBRARY_PATH=$(CURDIR)/vendor:$$LD_LIBRARY_PATH gxi demo/todo-app.ss
+	GERBIL_LOADPATH=$(CURDIR)/.gerbil/lib LD_LIBRARY_PATH=$(CURDIR)/vendor:$$LD_LIBRARY_PATH gxi demo/todo-app.ss
 
 demo-dashboard: build
-	LD_LIBRARY_PATH=$(CURDIR)/vendor:$$LD_LIBRARY_PATH gxi demo/dashboard.ss
+	GERBIL_LOADPATH=$(CURDIR)/.gerbil/lib LD_LIBRARY_PATH=$(CURDIR)/vendor:$$LD_LIBRARY_PATH gxi demo/dashboard.ss
