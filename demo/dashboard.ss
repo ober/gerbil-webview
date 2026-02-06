@@ -91,9 +91,9 @@
                               acc)))))))
     (svg->string
      (make-svg-document width height
-                        viewbox: (string-append "0 0 " (number->string width)
-                                                " " (number->string height))
-                        elements: bars))))
+                        (string-append "0 0 " (number->string width)
+                                       " " (number->string height))
+                        bars))))
 
 ;; ---- HTML template ----
 (def dashboard-html #<<HTML

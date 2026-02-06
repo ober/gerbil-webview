@@ -1,1 +1,2 @@
 (package: gerbil-webview)
+(depend: ("github.com/ober/gerbil-svg"))
